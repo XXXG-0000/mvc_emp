@@ -12,6 +12,9 @@ public class SiteInfo {
 	@Getter
 	private String protocol, server_name, context_root, site_name_kor, site_name_eng;
 	
+	@Getter
+	private SiteInfoDomain siDomain;
+	
 	private SiteInfo() {
 		
 	}
@@ -29,12 +32,7 @@ public class SiteInfo {
 		SqlSession handler = mbh.getHandler();
 		
 		try {
-			SiteInfoDomain sd = handler.selectOne("selectSiteInfo");
-			protocol = sd.getProtocol();
-			server_name = sd.getServer_name();
-			context_root = sd.getContext_root();
-			site_name_kor = sd.getSite_name_kor();
-			site_name_eng = sd.getSite_name_eng();
+			siDomain = handler.selectOne("selectSiteInfo");
 		} finally {
 			mbh.closeHandler(handler);
 		}//end finally
