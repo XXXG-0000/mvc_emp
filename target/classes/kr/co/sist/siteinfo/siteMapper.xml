@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.sist.siteInfo">
+	<select id="selectSiteInfo" resultType="siteInfoDomain">
+		select protocol,server_name,context_root,site_name_kor,site_name_eng
+		from	site_info
+	</select>
+</mapper>
