@@ -32,8 +32,18 @@ $(function(){
 </head>
 <body>
 <div id="wrap">
+	<c:choose>
+		<c:when test="${ empAddResult }">
+		<img src="${ defaultURL }emp/images/add_success.png"/><br>
+		<c:out value="${ param.ename }"/> 사원의 정보가 추가되었습니다.<br>
+		</c:when>
+		<c:otherwise>
+		<img src="${ defaultURL }emp/images/add_fail.png"/>
+		<c:out value="${ param.ename }"/> 사원의 정보를 추가하는 데 실패했습니다.<br>
+		</c:otherwise>
+	</c:choose>
 	<a href="${defaultURL}emp_list.do?cmd=ESA001">사원정보조회</a>
-	<a href="${defaultURL}emp_add_frm.do?cmd=EA001">사원정보추가</a>
+	<a href="${defaultURL}index.do">메인화면</a>
 </div>
 </body>
 </html>

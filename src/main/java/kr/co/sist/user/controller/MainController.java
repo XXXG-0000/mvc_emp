@@ -10,20 +10,30 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.co.sist.action.Action;
+import kr.co.sist.main.MainAction;
 import kr.co.sist.siteinfo.SiteInfo;
 import kr.co.sist.siteinfo.SiteInfoDomain;
+import kr.co.sist.user.emp.EmpFormAction;
+import kr.co.sist.user.emp.EmpFormProcessAction;
+import kr.co.sist.user.emp.SearchAllEmpAction;
 
 @SuppressWarnings("serial")
 public class MainController extends HttpServlet {
 	
 	private static Map<String, Action> mainMap = new HashMap<String, Action>();
 	private SiteInfoDomain siDomain;
+	public static String uploadDir;
 	
 	static {
-		//Map에 설정할 Action을 넣기
-	}
+		//Map에 설정할 Action을 넣기 // 11.27
+		mainMap.put("M001", new MainAction());
+		mainMap.put("ESA001", new SearchAllEmpAction());
+		mainMap.put("EA001", new EmpFormAction());
+		mainMap.put("EA002", new EmpFormProcessAction());
+	}//static
 	
 	public void init() {
 		//site 정보 로딩
@@ -41,6 +51,7 @@ public class MainController extends HttpServlet {
 		application.setAttribute("defaultURL", defaultURL.toString());
 		application.setAttribute("site_kor", siDomain.getSite_name_kor());
 		application.setAttribute("site_eng", siDomain.getSite_name_eng());
+		uploadDir = siDomain.getUpload_dir();
 	}
 	
 	protected void doGet(HttpServletRequest request, 
@@ -59,7 +70,21 @@ public class MainController extends HttpServlet {
 	private void pagePreProcess(HttpServletRequest request, 
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		movePage(request, response, "index", true);
+		//입력된 cmd로 사용할 Action을 선택한다.
+		String  cmd = request.getParameter("cmd");
+		if(!mainMap.containsKey(cmd)) { //URL 입력이 잘못 되었을 경우
+			cmd = "M001"; // 메인 페이지로 전송한다.
+		}
+		
+		Action action = mainMap.get(cmd);//cmd에 해당하는 자식을 부모로 받는다.
+		//부모의 이름으로 모든 자식을 사용할 수 있다 => 객체 다형성
+		
+		action.execute(request, response); //자식이 일을 수행
+		String moveURL = action.moveURL(); //이동할 URL
+		boolean isForward = action.isForward(); // 
+		
+		//자식이 반환한 값을 사용
+		movePage(request, response, moveURL, isForward); // 해당 페이지로 이동
 		
 	}
 	

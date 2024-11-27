@@ -6,6 +6,9 @@
 <properties resource="properties/database.properties" />
 <typeAliases>
 	<typeAlias type="kr.co.sist.siteinfo.SiteInfoDomain" alias="siteInfoDomain"/>
+	<typeAlias type="kr.co.sist.user.emp.MvcEmpDomain" alias="mvcEmpDomain"/>
+	
+	<typeAlias type="kr.co.sist.user.emp.MvcEmpVO" alias="mvcEmpVO"/>	
 </typeAliases>
 
   <environments default="development">
@@ -20,7 +23,9 @@
     </environment>
   </environments>
   <mappers>
+  <!-- 사이트 운영 정보 -->
     <mapper resource="kr/co/sist/siteinfo/siteMapper.xml" />
-    
+    <!-- 사용자단 사원관리 -->
+    <mapper resource="kr/co/sist/user/emp/empMapper.xml" />    
   </mappers>
 </configuration>

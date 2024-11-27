@@ -3,8 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.sist.siteInfo">
-	<select id="selectSiteInfo" resultType="siteInfoDomain">
-		select protocol,server_name,context_root,site_name_kor,site_name_eng
+	<select id="selectSiteInfo" resultType="siteInfoDomain" parameterType="String">
+		select protocol,server_name,context_root,site_name_kor,site_name_eng,
+				upload_dir
 		from	site_info
+		where	env=#{env}
 	</select>
 </mapper>

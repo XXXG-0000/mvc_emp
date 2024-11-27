@@ -8,5 +8,5 @@ import lombok.ToString;
 @Setter
 @ToString
 public class SiteInfoDomain {
-	private String protocol, server_name, context_root, site_name_kor, site_name_eng;
+	private String protocol, server_name, context_root, site_name_kor, site_name_eng,upload_dir;
 }

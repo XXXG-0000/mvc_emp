@@ -23,16 +23,16 @@ public class SiteInfo {
 		if(si == null) {
 			si = new SiteInfo();
 		}//end if
-		si.searchSiteInfo();
+		si.searchSiteInfo("D");
 		return si;
 	}//getInstance
 	
-	private void searchSiteInfo() {
+	private void searchSiteInfo(String env) {
 		MyBatisHandler mbh = MyBatisHandler.getInstance();
 		SqlSession handler = mbh.getHandler();
 		
 		try {
-			siDomain = handler.selectOne("selectSiteInfo");
+			siDomain = handler.selectOne("selectSiteInfo", env);
 		} finally {
 			mbh.closeHandler(handler);
 		}//end finally
