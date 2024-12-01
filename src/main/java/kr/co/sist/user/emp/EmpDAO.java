@@ -80,6 +80,51 @@ public class EmpDAO {
 		}//end finally
 		
 		return cnt;
-	}//selectNextEmpno
+	}//insertEmp
+	
+	public MvcEmpDomain selectOneEmp(int empno) throws PersistenceException {
+		MvcEmpDomain med = null;
+		
+		MyBatisHandler mbh = MyBatisHandler.getInstance();
+		SqlSession handler = mbh.getHandler();
+		
+		try {
+			med = handler.selectOne("kr.co.sist.emp.selectOneEmp", empno);
+		} finally {
+			mbh.closeHandler(handler);
+		}//end finally
+		
+		return med;
+	}//updateEmp
+	
+	public int updateEmp(MvcEmpVO meVO) throws PersistenceException {
+		int cnt = 0;
+		
+		MyBatisHandler mbh = MyBatisHandler.getInstance();
+		SqlSession handler = mbh.getHandler(true);
+		
+		try {
+			cnt = handler.update("kr.co.sist.emp.updateEmp", meVO);
+		} finally {
+			mbh.closeHandler(handler);
+		}//end finally
+		
+		return cnt;
+	}//updateEmp
+	
+	public int deleteEmp(MvcEmpVO meVO) throws PersistenceException {
+		int cnt = 0;
+		
+		MyBatisHandler mbh = MyBatisHandler.getInstance();
+		SqlSession handler = mbh.getHandler(true);
+		
+		try {
+			cnt = handler.update("kr.co.sist.emp.deleteEmp", meVO);
+		} finally {
+			mbh.closeHandler(handler);
+		}//end finally
+		
+		return cnt;
+	}//updateEmp
 	
 }//class

@@ -28,9 +28,54 @@
 		from	dept
 	</select>
 	
-	<!--  -->
+	<!-- 사원 정보 추가 -->
 	<insert id="insertEmp" parameterType="mvcEmpVO">
 		insert into mvc_emp(empno,ename,job,sal,comm,deptno)
 		values(#{empno},#{ename},#{job},#{sal},#{comm},#{deptno})
 	</insert>
+	
+	<resultMap type="mvcEmpDomain" id="mvcEmpOneResult">
+		<result column="EMPNO" property="empno" />
+		<result column="ENAME" property="ename" />
+		<result column="JOB" property="job" />
+		<result column="SAL" property="sal" />
+		<result column="COMM" property="comm" />
+		<result column="DEPTNO" property="deptno" />
+		<result column="HIREDATE" property="hiredate" />
+	</resultMap>
+	
+	<!-- 사원번호에 해당하는 사원정보 조회 -->
+	<select id="selectOneEmp" resultMap="mvcEmpOneResult" parameterType="int">
+		select 	ename,job,sal,comm,deptno,hiredate
+		from	mvc_emp
+		where	empno=#{empno}
+	</select>
+	
+	<update id="updateEmp" parameterType="mvcEmpVO">
+		update	mvc_emp
+		<set>
+		<if test="ename neq null and ename neq ''">
+			ename=#{ename},
+		</if>
+		<if test="job neq null and job neq ''">
+			job=#{job},
+		</if>
+		<if test="sal neq 0">
+			sal=#{sal},
+		</if>
+		<if test="comm neq null and comm neq ''">
+			comm=#{comm},
+		</if>
+		<if test="deptno neq 0">
+			deptno=#{deptno}
+		</if>
+		</set>
+		where	empno=#{empno}
+	</update>
+	
+	<delete id="deleteEmp" parameterType="int">
+		delete
+		from	mvc_emp
+		where	empno=#{empno}
+	</delete>
 </mapper>

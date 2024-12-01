@@ -18,7 +18,10 @@ import kr.co.sist.siteinfo.SiteInfo;
 import kr.co.sist.siteinfo.SiteInfoDomain;
 import kr.co.sist.user.emp.EmpFormAction;
 import kr.co.sist.user.emp.EmpFormProcessAction;
+import kr.co.sist.user.emp.EmpModifyAction;
+import kr.co.sist.user.emp.EmpRemoveAction;
 import kr.co.sist.user.emp.SearchAllEmpAction;
+import kr.co.sist.user.emp.SearchOneEmpAction;
 
 @SuppressWarnings("serial")
 public class MainController extends HttpServlet {
@@ -33,6 +36,9 @@ public class MainController extends HttpServlet {
 		mainMap.put("ESA001", new SearchAllEmpAction());
 		mainMap.put("EA001", new EmpFormAction());
 		mainMap.put("EA002", new EmpFormProcessAction());
+		mainMap.put("ES001", new SearchOneEmpAction());
+		mainMap.put("EU001", new EmpModifyAction());
+		mainMap.put("ED001", new EmpRemoveAction());
 	}//static
 	
 	public void init() {
